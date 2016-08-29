@@ -1,0 +1,53 @@
+{
+  "sessions": [
+    {
+      "id": 1,
+      "name": "Creating Stunning Dialogue",
+      "startTimeUtc": "",
+      "endTimeUtc": "",
+      "categoryIds": [1],
+      "speakerIds": [1, 2]
+    },
+    {
+      "id": 2,
+      "name": "Success Hints",
+      "startTimeUtc": "",
+      "endTimeUtc": "",
+      "categoryIds": [1],
+      "speakerIds": [3, 4]
+    },
+    {
+      "id": 3,
+      "name": "Studio Pictures",
+      "startTimeUtc": "",
+      "endTimeUtc": "",
+      "categoryIds": [1],
+      "speakerIds": [5, 6]
+    },
+    {
+      "id": 4,
+      "name": "Turning Your Novel into a Movie",
+      "startTimeUtc": "",
+      "endTimeUtc": "",
+      "categoryIds": [1],
+      "speakerIds": [7, 8]
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "Writing for the Screen" },
+    { "id": 2, "name": "Beginning Writing" },
+    { "id": 3, "name": "Marketing" },
+    { "id": 4, "name": "Nonfiction" },
+    { "id": 5, "name": "The Business of Writing" }
+  ],
+  "speakers": [
+    { "id": 1, "firstName": "Lawrence", "middleName": "H", "lastName": "Levy" },
+    { "id": 2, "firstName": "Nancy", "middleName": "", "lastName": "Holder" },
+    { "id": 3, "firstName": "Gene", "middleName": "", "lastName": "Perret" },
+    { "id": 4, "firstName": "Peter", "middleName": "", "lastName": "Dunne" },
+    { "id": 5, "firstName": "Rob", "middleName": "", "lastName": "Edwards" },
+    { "id": 6, "firstName": "Doug", "middleName": "", "lastName": "Richardson" },
+    { "id": 7, "firstName": "Lida", "middleName": "", "lastName": "Sideris" },
+    { "id": 8, "firstName": "Anne", "middleName": "", "lastName": "Perry" }
+  ]
+}
