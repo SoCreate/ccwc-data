@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server/index.js"
+    "start": "ts-node --project src/server ./src/server/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,8 @@
   "dependencies": {
     "express": "^4.14.0",
     "express-graphql": "^0.5.4",
-    "graphql": "^0.7.0"
+    "graphql": "^0.7.0",
+    "ts-node": "^1.3.0",
+    "typescript": "^2.0.0"
   }
 }
