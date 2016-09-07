@@ -1,73 +1,11 @@
 ///<reference path="../types.d.ts"/>
 const graphql = require('graphql');
-
-const data = require('../data/2016scheduledata.json');
-
-const findById = function (list, id) {
-    let idToMatch = parseInt(id);
-    return list.find(function (item) {
-        return item.id === idToMatch;
-    });
-};
-
-const speakerType = new graphql.GraphQLObjectType({
-    name: 'Speaker',
-    fields: function () {
-        return {
-            id: {type: graphql.GraphQLString},
-            firstName: {type: graphql.GraphQLString},
-            middleName: {type: graphql.GraphQLString},
-            lastName: {type: graphql.GraphQLString},
-            sessions: {
-                type: new graphql.GraphQLList(sessionType),
-                resolve: function (parent) {
-                    return data.sessions.filter(function (item) {
-                        return item.speakerIds.indexOf(parent.id) >= 0;
-                    });
-                }
-            }
-        };
-    }
-});
-const categoryType = new graphql.GraphQLObjectType({
-    name: 'Category',
-    fields: function () {
-        return {
-            id: { type: graphql.GraphQLString },
-            name: { type: graphql.GraphQLString },
-            sessions: {
-                type: new graphql.GraphQLList(sessionType),
-                resolve: function (parent) {
-                    return data.sessions.filter(function (item) {
-                        return item.categoryIds.indexOf(parent.id) >= 0;
-                    });
-                }
-            }
-        };
-    }
-});
-
-const sessionType = new graphql.GraphQLObjectType({
-    name: 'Session',
-    fields: {
-        id: {type: graphql.GraphQLString},
-        name: {type: graphql.GraphQLString},
-        likes: {
-            type: graphql.GraphQLInt,
-            resolve: function () {
-                return 99;
-            }
-        },
-        categories: {
-            type: new graphql.GraphQLList(categoryType),
-            resolve: function (parent) {
-                return data.categories.filter(function (item) {
-                    return parent.categoryIds.indexOf(item.id) >= 0;
-                });
-            }
-        }
-    }
-});
+import { speakerType } from './types/speaker';
+import { categoryType } from './types/category';
+import { sessionType } from './types/session';
+import { speakerMutations } from '../mutations/speaker.mutation';
+import { DataService } from '../data.service';
+import { findById } from '../utils';
 
 export const schema = new graphql.GraphQLSchema({
     query: new graphql.GraphQLObjectType({
@@ -79,13 +17,13 @@ export const schema = new graphql.GraphQLSchema({
                     id: {type: graphql.GraphQLString}
                 },
                 resolve: function (_, args) {
-                    return findById(data.speakers, args.id);
+                    return findById(DataService.getInstance().getData('speakers'), args.id);
                 }
             },
             speakers: {
                 type: new graphql.GraphQLList(speakerType),
                 resolve: function () {
-                    return data.speakers.sort(function (itemA, itemB) {
+                    return DataService.getInstance().getData('speakers').sort(function (itemA, itemB) {
                         return itemA.lastName > itemB.lastName;
                     });
                 }
@@ -93,13 +31,13 @@ export const schema = new graphql.GraphQLSchema({
             categories: {
                 type: new graphql.GraphQLList(categoryType),
                 resolve: function () {
-                    return data.categories;
+                    return DataService.getInstance().getData('categories');
                 }
             },
             sessions: {
                 type: new graphql.GraphQLList(sessionType),
                 resolve: function () {
-                    return data.sessions;
+                    return DataService.getInstance().getData('sessions');
                 }
             },
             session: {
@@ -108,9 +46,10 @@ export const schema = new graphql.GraphQLSchema({
                     id: {type: graphql.GraphQLString}
                 },
                 resolve: function (_, args) {
-                    return findById(data.sessions, args.id);
+                    return findById(DataService.getInstance().getData('sessions'), args.id);
                 }
             }
         }
-    })
+    }),
+    mutation: speakerMutations
 });
